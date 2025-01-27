@@ -46,6 +46,13 @@ namespace EventTicketing.Controllers
 
             _context.SavePosts.Remove(savedPost);
 
+            var log = new Log
+            {
+                Action = "Delete Saved Post",
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            };
+            _context.Logs.Add(log);
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");

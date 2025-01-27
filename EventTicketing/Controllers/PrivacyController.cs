@@ -47,6 +47,13 @@ namespace EventTicketing.Controllers
                 Message = message
             };
 
+            var log = new Log
+            {
+                Action = "Submit Rating",
+                UserId = user.Id
+            };
+            _context.Logs.Add(log);
+
             _context.Rates.Add(rating);
             await _context.SaveChangesAsync();
 

@@ -63,7 +63,15 @@ namespace EventTicketing.Controllers
                 {
                     post.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Ensure user ID remains unchanged
                     _context.Update(post);
-                    await _context.SaveChangesAsync();
+
+                var log = new Log
+                {
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                    Action = "Edit Post"
+                };
+                _context.Logs.Add(log);
+
+                await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -104,6 +112,14 @@ namespace EventTicketing.Controllers
             _context.Likes.RemoveRange(likes);
 
             _context.Posts.Remove(post);
+
+            var log = new Log
+            {
+                Action = "Delete Post",
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            };
+            _context.Logs.Add(log);
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");

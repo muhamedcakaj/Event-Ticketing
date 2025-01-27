@@ -38,6 +38,13 @@ namespace EventTicketing.Controllers
             if (notification != null)
             {
                 _context.Notifications.Remove(notification);
+
+                var log = new Log
+                {
+                    Action = "Delete Notification",
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                _context.Logs.Add(log);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("Index");

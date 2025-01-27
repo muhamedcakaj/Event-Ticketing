@@ -31,10 +31,17 @@ namespace EventTicketing.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,EventDate,Location,CreatedAt")] Post post)
         {
-                post.UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                post.UserId = UserId;
                 post.CreatedAt = DateTime.UtcNow;
 
                 _context.Add(post);
+            var log = new Log
+            {
+                Action = "Create Post",
+                UserId = UserId
+            };
+                _context.Logs.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
         }

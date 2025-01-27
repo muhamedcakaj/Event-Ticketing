@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using EventTicketing.Data;
+using EventTicketing.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,7 @@ namespace EventTicketing.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var likedpost = await _context.Likes.FindAsync(id);
             if (likedpost == null || likedpost.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
@@ -41,6 +43,13 @@ namespace EventTicketing.Controllers
             //Deleting Saved Post
 
             _context.Likes.Remove(likedpost);
+
+           var log = new Log
+           {
+               Action = "Delete Like",
+               UserId = userId
+           };
+            _context.Logs.Add(log);
 
             await _context.SaveChangesAsync();
 

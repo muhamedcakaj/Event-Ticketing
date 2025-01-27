@@ -39,6 +39,14 @@ namespace EventTicketing.Controllers
             if (viewer != null)
             {
                 _context.ProfileViewers.Remove(viewer);
+
+                var log = new Log
+                {
+                    Action = "Delete Profile Viewer",
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                _context.Logs.Add(log);
+
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("Index");
