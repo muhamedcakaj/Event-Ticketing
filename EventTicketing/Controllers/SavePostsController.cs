@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using EventTicketing.Data;
+using EventTicketing.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
