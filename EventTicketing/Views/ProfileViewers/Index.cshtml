@@ -1,0 +1,96 @@
+﻿@model IEnumerable<EventTicketing.Models.ProfileViewer>
+
+@{
+    ViewData["Title"] = "Profile Viewers";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4 bg-dark-gradient text-white text-center">
+        <div class="card-body py-5">
+            <h2 class="fw-bold text-glow">
+                <i class="bi bi-eye-fill"></i> Profile Viewers
+            </h2>
+            <p class="fs-5 text-light">Discover who's been lurking in the shadows...</p>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        @if (Model.Any())
+        {
+            <div class="col-lg-10 offset-lg-1">
+                <div class="list-group">
+                    @foreach (var viewer in Model)
+                    {
+                        <div class="list-group-item border-0 shadow-lg mb-3 rounded-4 p-4 bg-dark text-white d-flex align-items-center mysterious-hover">
+                            <div class="flex-grow-1">
+                                <h5 class="fw-bold text-neon">@viewer.User.UserName</h5>
+                                <p class="mb-2 text-muted">@viewer.Message</p>
+                                <small class="text-light">
+                                    <i class="bi bi-clock"></i> @viewer.CreatedAt.ToString("MMMM dd, yyyy - hh:mm tt")
+                                </small>
+                            </div>
+                            <div>
+                                <form asp-action="Delete" asp-controller="ProfileViewers" method="post">
+                                    <input type="hidden" name="id" value="@viewer.Id" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-4 py-2 shadow-neon">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-12 text-center mt-5">
+                <i class="bi bi-eye-slash display-1 text-neon"></i>
+                <h4 class="mt-3 fw-bold text-glow">No profile viewers yet</h4>
+                <p class="fs-5 text-black">Once someone visits your profile, they'll be revealed here...</p>
+                <a href="/" class="btn btn-dark btn-lg rounded-pill px-4 mt-3 shadow-neon">Explore Profiles</a>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    /* Mysterious dark gradient background */
+    .bg-dark-gradient {
+        background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2c2c2c);
+        border: 2px solid #333;
+    }
+
+    /* Text glow effect */
+    .text-glow {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Neon style effect */
+    .text-neon {
+        color: #00ffcc;
+        text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+    }
+
+    /* Smooth hover effect with scale */
+    .mysterious-hover:hover {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+        transform: scale(1.02);
+        transition: all 0.4s ease-in-out;
+    }
+
+    /* Neon button effect */
+    .shadow-neon {
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
+    }
+
+    /* Dark-themed avatar */
+    .avatar img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid #00ffcc;
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
+    }
+</style>

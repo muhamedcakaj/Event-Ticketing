@@ -1,0 +1,57 @@
+﻿@model IEnumerable<EventTicketing.Models.Post>
+
+@{
+    ViewData["Title"] = "User Profile";
+    var username = ViewBag.Username as string;
+    var followStatus = ViewBag.FollowStatus as string;
+    var profileUserId = ViewBag.ProfileUserId as string;
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-body text-center">
+            <h2 class="fw-bold">@username's Posts</h2>
+            <p class="text-muted">All events created by @username</p>
+            <form asp-action="Report" method="post" class="d-inline">
+                <input type="hidden" name="userId" value="@ViewBag.ProfileUserId" />
+                <button type="submit" class="btn btn-danger">
+                    Report
+                </button>
+            </form>
+            <form asp-action="@(followStatus == "Unfollow" ? "Unfollow" : "Follow")" method="post" class="d-inline">
+                <input type="hidden" name="userId" value="@profileUserId" />
+                <button type="submit" class="btn @(followStatus == "Unfollow" ? "btn-danger" : "btn-primary")">
+                    @followStatus
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        @if (Model.Any())
+        {
+            @foreach (var post in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">@post.Title</h5>
+                            <p class="card-text">@post.Description</p>
+                            <p><strong>Date:</strong> @post.EventDate.ToString("MMMM dd, yyyy")</p>
+                            <p><strong>Location:</strong> @post.Location</p>
+                        </div>
+                        <div class="card-footer text-muted text-center">
+                            Created on @post.CreatedAt.ToString("MMMM dd, yyyy")
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <p class="text-muted">@username hasn't created any posts yet.</p>
+            </div>
+        }
+    </div>
+</div>

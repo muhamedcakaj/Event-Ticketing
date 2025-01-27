@@ -1,0 +1,67 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!-- Background with Gradient -->
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-gradient"
+     style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+    <div class="row w-100" style="max-width: 900px;">
+        <!-- Signup Form Section -->
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow-lg rounded-4 border-0">
+                <div class="card-body p-5">
+                    <h2 class="text-center text-primary fw-bold mb-4">Create an Account</h2>
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="needs-validation" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                        <!-- Username Input -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="Input.Username" class="form-control rounded-3" autocomplete="username" placeholder="Username" required />
+                            <label asp-for="Input.Username">Username</label>
+                            <span asp-validation-for="Input.Username" class="text-danger"></span>
+                        </div>
+
+                        <!-- Email Input -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="Input.Email" class="form-control rounded-3" autocomplete="email" placeholder="name@example.com" required />
+                            <label asp-for="Input.Email">Email Address</label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <!-- Password Input -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="Input.Password" type="password" class="form-control rounded-3" autocomplete="new-password" placeholder="Password" required />
+                            <label asp-for="Input.Password">Password</label>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <!-- Confirm Password Input -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="Input.ConfirmPassword" type="password" class="form-control rounded-3" autocomplete="new-password" placeholder="Confirm Password" required />
+                            <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <!-- Register Button -->
+                        <button id="registerSubmit" type="submit"
+                                class="btn btn-primary w-100 py-2 rounded-pill shadow-sm fw-bold">
+                            Register
+                        </button>
+
+                        <!-- Links -->
+                        <div class="mt-4 text-center">
+                            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="link-light text-decoration-none d-block">Already have an account? Log In</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

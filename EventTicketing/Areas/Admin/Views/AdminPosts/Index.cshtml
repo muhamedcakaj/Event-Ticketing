@@ -1,0 +1,117 @@
+﻿@model IEnumerable<EventTicketing.Models.Post>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Posts</h1>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<!-- Filter Form -->
+<form method="get" asp-action="Index">
+    <div class="row">
+        <!-- Location Filter -->
+        <div class="col-md-3">
+            <label for="location">Location</label>
+            <input type="text" name="location" id="location" class="form-control"
+                   value="@ViewData["LocationFilter"]" placeholder="Filter by location" />
+        </div>
+
+        <!-- Title Filter -->
+        <div class="col-md-3">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" class="form-control"
+                   value="@ViewData["TitleFilter"]" placeholder="Filter by title" />
+        </div>
+
+        <!-- User ID Filter -->
+        <div class="col-md-3">
+            <label for="userId">User ID</label>
+            <input type="text" name="userId" id="userId" class="form-control"
+                   value="@ViewData["UserIdFilter"]" placeholder="Filter by user ID" />
+        </div>
+
+        <!-- Events in 2025 -->
+        <div class="col-md-3 d-flex align-items-center">
+            <input type="checkbox" name="only2025" id="only2025" value="true" @(Convert.ToBoolean(ViewData["Only2025Filter"]) ? "checked" : "") />
+            <label for="only2025" class="ml-2">Only Events in 2025</label>
+        </div>
+    </div>
+
+        <!-- Submit Button -->
+        <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>    
+</form>
+
+<!-- Posts Table -->
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortBy="Title" asp-route-sortOrder="@(ViewData["SortBy"]?.ToString() == "Title" && ViewData["SortOrder"]?.ToString() == "asc" ? "desc" : "asc")">
+                    Title
+                    @(ViewData["SortBy"]?.ToString() == "Title" ? (ViewData["SortOrder"]?.ToString() == "asc" ? "▲" : "▼") : "")
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortBy="EventDate" asp-route-sortOrder="@(ViewData["SortBy"]?.ToString() == "EventDate" && ViewData["SortOrder"]?.ToString() == "asc" ? "desc" : "asc")">
+                    Event Date
+                    @(ViewData["SortBy"]?.ToString() == "EventDate" ? (ViewData["SortOrder"]?.ToString() == "asc" ? "▲" : "▼") : "")
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortBy="Location" asp-route-sortOrder="@(ViewData["SortBy"]?.ToString() == "Location" && ViewData["SortOrder"]?.ToString() == "asc" ? "desc" : "asc")">
+                    Location
+                    @(ViewData["SortBy"]?.ToString() == "Location" ? (ViewData["SortOrder"]?.ToString() == "asc" ? "▲" : "▼") : "")
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortBy="CreatedAt" asp-route-sortOrder="@(ViewData["SortBy"]?.ToString() == "CreatedAt" && ViewData["SortOrder"]?.ToString() == "asc" ? "desc" : "asc")">
+                    Created At
+                    @(ViewData["SortBy"]?.ToString() == "CreatedAt" ? (ViewData["SortOrder"]?.ToString() == "asc" ? "▲" : "▼") : "")
+                </a>
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.EventDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- Pagination Section -->
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @(Convert.ToInt32(ViewData["CurrentPage"]) == 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Convert.ToInt32(ViewData["CurrentPage"]) - 1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for (int i = 1; i <= Convert.ToInt32(ViewData["TotalPages"]); i++)
+        {
+            <li class="page-item @(Convert.ToInt32(ViewData["CurrentPage"]) == i ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+            </li>
+        }
+        <li class="page-item @(Convert.ToInt32(ViewData["CurrentPage"]) == Convert.ToInt32(ViewData["TotalPages"]) ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Convert.ToInt32(ViewData["CurrentPage"]) + 1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

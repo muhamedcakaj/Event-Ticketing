@@ -1,0 +1,42 @@
+﻿@model IEnumerable<EventTicketing.Models.UserRelationship>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FollowerUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FollowedUser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FollowerUser.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FollowedUser.Id)
+            </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { followerId = item.FollowerId,followedId = item.FollowedId }) |
+                    @Html.ActionLink("Details", "Details", new { followerId = item.FollowerId, followedId = item.FollowedId }) |
+                    @Html.ActionLink("Delete", "Delete", new { followerId = item.FollowerId, followedId = item.FollowedId })
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

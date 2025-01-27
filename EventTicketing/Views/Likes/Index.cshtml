@@ -1,0 +1,93 @@
+﻿@model IEnumerable<EventTicketing.Models.Likes>
+
+@{
+    ViewData["Title"] = "My Likes Activity";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4 bg-gradient text-black text-center">
+        <div class="card-body py-5">
+            <h2 class="fw-bold"><i class="bi bi-heart-fill text-danger"></i> My Likes</h2>
+            <p class="fs-5">All posts you’ve shown love to</p>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        @if (Model.Any())
+        {
+            @foreach (var likes in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm rounded-4 border-0 transition-hover">
+                        <div class="position-relative">
+                            <div class="overlay">
+                                <span class="badge bg-danger p-2">
+                                    <i class="bi bi-heart-fill"></i> Liked
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-primary">@likes.Post.Title</h5>
+                            <p class="text-muted">@likes.Post.Description</p>
+                            <p class="mb-1"><i class="bi bi-calendar-event"></i> <strong>@likes.Post.EventDate.ToString("MMMM dd, yyyy")</strong></p>
+                            <p><i class="bi bi-geo-alt-fill text-danger"></i> <strong>@likes.Post.Location</strong></p>
+                        </div>
+                        <div class="card-footer bg-white text-center">
+                            <p class="text-muted mb-3"><i class="bi bi-clock"></i> Liked on @likes.Post.CreatedAt.ToString("MMMM dd, yyyy")</p>
+                            <form method="post" asp-action="Delete" asp-controller="Likes" asp-route-id="@likes.Id">
+                                <button type="submit" class="btn btn-outline-danger rounded-pill px-4 shadow-neon">
+                                    <i class="bi bi-x-circle"></i> Unlike
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <i class="bi bi-heartbreak display-1 text-danger"></i>
+                <h4 class="mt-3 fw-bold text-dark">No likes yet</h4>
+                <p class="text-muted fs-5">Start liking posts to fill this section</p>
+                <a href="/" class="btn btn-danger rounded-pill px-4 mt-3 shadow-sm">Discover Events</a>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    /* Background gradient for header */
+    .bg-gradient {
+        background: linear-gradient(135deg, #ff4e50, #f9d423);
+    }
+
+    /* Smooth hover effect */
+    .transition-hover:hover {
+        transform: scale(1.02);
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Neon effect for buttons */
+    .shadow-neon {
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+    }
+
+    /* Overlay effect on image */
+    .overlay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 5px 15px;
+        border-radius: 30px;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    /* Custom social media-style like icon */
+    .bi-heart-fill {
+        font-size: 1.5rem;
+    }
+</style>

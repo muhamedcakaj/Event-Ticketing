@@ -1,0 +1,139 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Users</div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage Users</h5>
+                    <p class="card-text">View, edit, and delete registered users.</p>
+                    <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="btn btn-light">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Posts</div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage Posts</h5>
+                    <p class="card-text">Create, edit, and delete posts.</p>
+                    <a asp-area="Admin" asp-controller="AdminPosts" asp-action="Index" class="btn btn-light">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Reposts</div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage Reposts</h5>
+                    <p class="card-text">View, edit, and delete reposts.</p>
+                    <a asp-area="Admin" asp-controller="AdminReposts" asp-action="Index" class="btn btn-light">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">User Relationships</div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage User Relationships</h5>
+                    <p class="card-text">View and manage user connections such as followers and follows.</p>
+                    <a asp-area="Admin" asp-controller="AdminUserRelationships" asp-action="Index" class="btn btn-light">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header">Save Post</div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage Saved Posts</h5>
+                    <p class="card-text">View and delete saved posts by users.</p>
+                    <a asp-area="Admin" asp-controller="AdminSavePosts" asp-action="Index" class="btn btn-light">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Rate Table</div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage Rate Table</h5>
+                    <p class="card-text">View and edit the rating system for posts and users.</p>
+                    <a asp-area="Admin" asp-controller="AdminRates" asp-action="Index" class="btn btn-light">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Notifications</div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage Notifications</h5>
+                    <p class="card-text">View and manage notifications for users.</p>
+                    <a asp-area="Admin" asp-controller="AdminNotifications" asp-action="Index" class="btn btn-light">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-light mb-3">
+                <div class="card-header text-dark">Likes</div>
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Manage Likes</h5>
+                    <p class="card-text">View and manage user likes on posts.</p>
+                    <a asp-area="Admin" asp-controller="AdminLikes" asp-action="Index" class="btn btn-dark">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Profile Viewer</div>
+                <div class="card-body">
+                    <h5 class="card-title">View User Profiles</h5>
+                    <p class="card-text">View user profiles and their activities.</p>
+                    <a asp-area="Admin" asp-controller="AdminProfileViewers" asp-action="Index" class="btn btn-light">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">User Roles</div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage User Roles</h5>
+                    <p class="card-text">Assign or change user roles within the application.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Report Profile</div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage Reports</h5>
+                    <p class="card-text">Assing or change Reports.</p>
+                    <a asp-area="Admin" asp-controller="AdminReportProfiles" asp-action="Index" class="btn btn-light">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Report Post</div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage Post Reports</h5>
+                    <p class="card-text">Report posts based on quality or engagement.</p>
+                    <a asp-area="Admin" asp-controller="AdminReportPosts" asp-action="Index" class="btn btn-light">Go</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

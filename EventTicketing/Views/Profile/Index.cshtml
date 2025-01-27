@@ -1,0 +1,101 @@
+﻿@model IEnumerable<EventTicketing.Models.Post>
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body text-center bg-gradient-primary text-white rounded-top">
+            <h2 class="fw-bold">🚀 My Posts</h2>
+            <p class="text-white-50">All events you've created are listed below</p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        @if (Model.Any())
+        {
+            <div class="d-flex flex-wrap gap-4 justify-content-center">
+                @foreach (var post in Model)
+                {
+                    <div class="card shadow-sm border-0 rounded-4" style="width: 22rem;">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-primary">@post.Title</h5>
+                            <p class="card-text text-muted">@post.Description</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="mb-0"><i class="bi bi-calendar-event"></i> @post.EventDate.ToString("MMMM dd, yyyy")</p>
+                                <p class="mb-0"><i class="bi bi-geo-alt"></i> @post.Location</p>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light border-0 text-center">
+                            <p class="text-muted small">Created on @post.CreatedAt.ToString("MMMM dd, yyyy")</p>
+                            <a href="@Url.Action("Edit", "Profile", new { id = post.Id })" class="btn btn-outline-warning btn-sm me-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <form method="post" asp-action="Delete" asp-controller="Profile" asp-route-id="@post.Id" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center mt-5">
+                <p class="text-muted fs-5">You haven't created any posts yet.</p>
+                <a href="@Url.Action("Post", "Posts")" class="btn btn-primary btn-lg rounded-pill">
+                    <i class="bi bi-plus-circle"></i> Create Your First Post
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const postCards = document.querySelectorAll('.card');
+            postCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.classList.add('shadow-lg');
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('shadow-lg');
+                });
+            });
+        });
+    </script>
+}
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #007bff, #6610f2);
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-outline-warning:hover {
+        background-color: #ffc107;
+        color: white;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #007bff, #6610f2);
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056b3, #520dc2);
+        }
+</style>

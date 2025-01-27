@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <h2 class="text-center text-primary fw-bold mb-4">About Event-Ticketing</h2>
+                    <p class="text-muted lead text-center">
+                        Welcome to <strong>Event-Ticketing</strong>, a social media-like platform designed exclusively for event enthusiasts.
+                        Here, you can discover, share, and engage with events happening around you.
+                        Follow other users, like and share events, and build a vibrant event-focused community!
+                    </p>
+                    <hr class="my-4" />
+
+                    <h4 class="text-center text-secondary fw-bold">We value your feedback!</h4>
+
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success text-center">@TempData["Success"]</div>
+                    }
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger text-center">@TempData["Error"]</div>
+                    }
+
+                    <form method="post" asp-action="SubmitRating" asp-controller="Privacy" class="mt-4">
+                        <div class="form-floating mb-3">
+                            <textarea name="message" class="form-control rounded-3 shadow-sm" id="message"
+                                      placeholder="Share your feedback..." style="height: 120px;" required></textarea>
+                            <label for="message">Your Feedback</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 rounded-pill shadow-sm">
+                            Submit Feedback
+                        </button>
+                    </form>
+
+                    <div class="mt-4 text-center">
+                        <a href="/" class="btn btn-outline-secondary rounded-pill">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Simple script to show an alert if feedback is submitted
+        setTimeout(() => {
+            $('.alert').fadeOut('slow');
+        }, 3000);
+    </script>
+}

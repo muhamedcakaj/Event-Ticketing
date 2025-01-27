@@ -1,0 +1,96 @@
+﻿@model EventTicketing.Models.Post
+
+@{
+    ViewData["Title"] = "Create Post";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-gradient-primary text-white text-center rounded-top">
+                    <h3 class="mb-0 fw-bold">🎉 Create New Event</h3>
+                    <p class="mt-1">Share your upcoming event with the world!</p>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Create" method="post" class="needs-validation" novalidate>
+                        <div class="mb-4">
+                            <label asp-for="Title" class="form-label fw-bold">Event Title</label>
+                            <input asp-for="Title" class="form-control form-control-lg rounded-3" placeholder="Enter event title" required />
+                            <div class="invalid-feedback">Please enter an event title.</div>
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Description" class="form-label fw-bold">Event Description</label>
+                            <textarea asp-for="Description" class="form-control form-control-lg rounded-3" rows="4" placeholder="Enter event details" required></textarea>
+                            <div class="invalid-feedback">Please enter event details.</div>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="EventDate" class="form-label fw-bold">Event Date & Time</label>
+                            <input asp-for="EventDate" type="datetime-local" class="form-control form-control-lg rounded-3" required />
+                            <div class="invalid-feedback">Please select a valid date and time.</div>
+                            <span asp-validation-for="EventDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Location" class="form-label fw-bold">Event Location</label>
+                            <input asp-for="Location" class="form-control form-control-lg rounded-3" placeholder="Enter event location" required />
+                            <div class="invalid-feedback">Please enter an event location.</div>
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill">
+                            <i class="bi bi-plus-circle"></i> Create Event
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Bootstrap validation styling
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })();
+    </script>
+}
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #007bff 0%, #6610f2 100%);
+    }
+
+    .form-control:focus {
+        border-color: #6610f2;
+        box-shadow: 0 0 10px rgba(102, 16, 242, 0.5);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #007bff, #6610f2);
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056b3, #520dc2);
+        }
+</style>
