@@ -95,9 +95,8 @@ namespace EventTicketing.Areas.Admin.Controllers
          
                     _context.Update(log);
                     await _context.SaveChangesAsync();
-             
-            
-            return View(log);
+                return RedirectToAction(nameof(Index));
+        
         }
 
         // GET: Admin/AdminLogs/Delete/5
