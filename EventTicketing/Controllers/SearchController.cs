@@ -111,6 +111,14 @@ namespace EventTicketing.Controllers
                     FollowerId = loggedInUserId,
                     FollowedId = userId
                 };
+                //Log
+                var log = new Log
+                {
+                    Action = "Followed User",
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                _context.Logs.Add(log);
+                //Log
 
                 //Adding Notifications for follower type
 
@@ -142,6 +150,14 @@ namespace EventTicketing.Controllers
 
             if (existingFollow != null)
             {
+                //Log
+                var log = new Log
+                {
+                    Action = "Unfollowed User",
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                _context.Logs.Add(log);
+                //Log
                 _context.UserRelationships.Remove(existingFollow);
                 await _context.SaveChangesAsync();
             }

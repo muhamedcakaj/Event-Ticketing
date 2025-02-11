@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace EventTicketing.Controllers
 {
@@ -107,12 +108,23 @@ namespace EventTicketing.Controllers
                 };
 
                 //Adding Notifications for repost type
+
                 var originalpost = await _context.Posts
                 .Include(p => p.User)  // Eagerly load the User navigation property
                 .FirstOrDefaultAsync(p => p.Id == postId);
 
                 var userWhoIsReposting = await _context.Users
                     .FirstOrDefaultAsync(u => u.Id == loggedInUserId);
+
+
+                //Log
+                var log = new Log
+                {
+                    Action = "Reposted Post",
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                _context.Logs.Add(log);
+                //Log
 
                 var notifications = new Notifications
                 {
@@ -139,6 +151,14 @@ namespace EventTicketing.Controllers
 
             if (repost != null)
             {
+                //Log
+                var log = new Log
+                {
+                    Action = "Remove Repost",
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                _context.Logs.Add(log);
+                //Log
                 _context.Reposts.Remove(repost);
                 await _context.SaveChangesAsync();
             }
@@ -161,6 +181,14 @@ namespace EventTicketing.Controllers
                     PostId = postId,
                     UserId = loggedInUserId
                 };
+                //Log
+                var log = new Log
+                {
+                    Action = "Liked Post",
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                _context.Logs.Add(log);
+                //Log
 
                 //Adding Notifications for like type
                 var originalpost = await _context.Posts
@@ -193,6 +221,14 @@ namespace EventTicketing.Controllers
 
             if(dislike !=null)
             {
+                //Log
+                var log = new Log
+                {
+                    Action = "Unliked Post",
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                _context.Logs.Add(log);
+                //Log
                 _context.Remove(dislike);
                 await _context.SaveChangesAsync();
             }
@@ -213,6 +249,16 @@ namespace EventTicketing.Controllers
                     PostId = postId,
                     UserId = loggedInUserId
                 };
+
+                //Log
+                var log = new Log
+                {
+                    Action = "Saved Post",
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                _context.Logs.Add(log);
+                //Log
+
                 _context.SavePosts.Add(savePost);
                 await _context.SaveChangesAsync();
             }
@@ -229,6 +275,14 @@ namespace EventTicketing.Controllers
 
             if (savedPost != null)
             {
+                //Log
+                var log = new Log
+                {
+                    Action = "Unsave Post",
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                _context.Logs.Add(log);
+                //Log
                 _context.SavePosts.Remove(savedPost);
                 await _context.SaveChangesAsync();
             }
@@ -239,11 +293,6 @@ namespace EventTicketing.Controllers
         public async Task<IActionResult> ReportPost(int postId)
         {
             var loggedInUserId = _userManager.GetUserId(User);
-
-            if (string.IsNullOrEmpty(loggedInUserId))
-            {
-                return BadRequest("User is not logged in.");
-            }
 
             if (postId <= 0)
             {
@@ -265,6 +314,15 @@ namespace EventTicketing.Controllers
                 UserId = loggedInUserId,
                 PostId = postId
             };
+
+            //Log
+            var log = new Log
+            {
+                Action = "Reported Post",
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            };
+            _context.Logs.Add(log);
+            //Log
 
             _context.ReportPosts.Add(report);
             await _context.SaveChangesAsync();
