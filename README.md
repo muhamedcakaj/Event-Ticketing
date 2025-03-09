@@ -1,73 +1,36 @@
-# **Event Social Network – ASP.NET Core MVC**  
+# **Event Social Network**  
 
-Ky projekt është një rrjet social i fokusuar te eventet, i zhvilluar me **ASP.NET Core MVC**, **Razor Pages**, dhe **SQL Server** për backend-in.  
+Event Social Network është një platformë sociale e ndërtuar me **ASP.NET Core MVC** dhe **SQL Server**, e cila u mundëson përdoruesve të zbulojnë, ndjekin dhe ndërveprojnë me evente dhe me njëri-tjetrin.  
 
- 🚀 **Karakteristikat Kryesore**  
+### **Autentifikimi dhe Siguria**  
+- Regjistrimi dhe hyrja menaxhohen me **ASP.NET Identity**, duke siguruar një sistem të besueshëm autentifikimi.  
+- Pas regjistrimit, përdoruesit duhet të **konfirmojnë email-in** për të aktivizuar llogarinë. Pa këtë hap, hyrja në sistem nuk është e mundur.  
+- Fjalëkalimet ruhen të **koduar (hashed)** për siguri maksimale.  
+- Përdoruesit ndahen në dy role kryesore: **User** dhe **Admin**.  
+- Platforma përdor **HTTPS** për të mbrojtur të dhënat gjatë komunikimit në rrjet.  
 
-### 🔐 **Autentifikimi & Siguria**  
-- **Regjistrimi dhe hyrja** bëhen me **ASP.NET Identity**.  
-- **Konfirmimi i emailit** është i detyrueshëm për të hyrë në sistem.  
-- **Password-i ruhet i hash-uar** për siguri maksimale.  
-- Të gjitha kërkesat kryhen mbi **HTTPS** për mbrojtje shtesë.  
-- Aksesimi i faqes është i kufizuar me `[Authorize]`, që do të thotë se përdoruesit e paregjistruar nuk mund të shohin përmbajtjen.  
+### **Funksionalitetet Kryesore**  
+- **Publikimi i postimeve dhe eventeve** me mundësi pëlqimi, ripostimi, ruajtjeje ose raportimi.  
+- Çdo veprim si **pëlqimi, ripostimi apo ndjekja** dërgon automatikisht një **njoftim** tek autori i postimit.  
+- Përdoruesit mund të ndjekin njëri-tjetrin dhe të shohin postimet e ndjekësve të tyre në **faqen kryesore**.  
+- Opsioni për **ruajtjen e postimeve të preferuara** dhe një seksion për **historikun e ndërveprimeve**.  
+- **Monitorimi i vizitorëve të profilit**, ku përdoruesit mund të shohin se kush ka vizituar profilin e tyre.  
 
----
+### **Kërkimi dhe Navigimi**  
+- Kërkim i thjeshtë për të gjetur përdorues sipas **username-it**.  
+- Klikimi mbi një përdorues e çon në profilin e tij, ku mund të shihet përmbajtja që ai ka publikuar.  
 
-🌍 **Funksionalitetet Sociale**  
+### **Paneli i Administrimit**  
+- Administratorët kanë akses në një **panel menaxhimi**, ku mund të krijojnë, editojnë dhe fshijnë postime, evente dhe përdorues.  
+- Të gjitha operacionet bazë të të dhënave (**CRUD**) janë të disponueshme për administratorët.  
 
-### 🏠 **Home**  
-- Home shfaq **postimet dhe repostimet** e përdoruesve që ke ndjekur.  
-- Mund të **pëlqesh (Like), ripostoshe (Repost), ruash (Save) dhe raportosh (Report)** çdo postim.  
-- Çdo ndërveprim i dërgon një **njoftim** autorit të postimit.  
+### **Gjurmimi i Aktivitetit**  
+- Çdo veprim i kryer nga përdoruesit dhe administratorët ruhet në databazë për qëllime **auditimi dhe monitorimi**.  
 
-### 🔎 **Search**  
-- Lejon kërkimin e **përdoruesve të tjerë** me emër ose username.  
-- Klikimi mbi një përdorues të çon në **profilin e tij**.  
-
-### 🔔 **Notifications**  
-- Tregon një listë të **njoftimeve në kohë reale** për:  
-  - **Pëlqime, ripostime dhe ruajtje** të postimeve.  
-  - **Vizita të profilit nga përdorues të tjerë.**  
-  - **Ndjekës të rinj (followers).**  
-  - **Raportime të postimeve të tua.**  
-
-### 👤 **Profile**  
-- Tregon **postimet dhe repostimet** e përdoruesit.  
-- Lejon **ndjekjen (Follow) ose heqjen nga ndjekja (Unfollow)** e përdoruesve të tjerë.  
-- Mundëson **modifikimin ose fshirjen** e postimeve personale.  
-
-### 💾 **Saved Posts**  
-- Përdoruesi mund të shohë të gjitha **postimet që ka ruajtur** për më vonë.  
-
-### ❤️ **Likes Activity**  
-- Tregon historikun e **postimeve që ke pëlqyer**.  
-
-### 👀 **Profile Viewer**  
-- Shfaq një listë të **të gjithë përdoruesve që kanë vizituar profilin tënd**.  
-- Çdo vizitë regjistrohet dhe i shfaqet si **njoftim përdoruesit të vizituar**.  
-
-### ⚙️ **Privacy & Account Management**  
-- Përdoruesit mund të:  
-  - **Ndryshojnë informacionet personale**.  
-  - **Fshijnë llogarinë e tyre** përfundimisht.  
-  - **Vlerësojnë platformën me një rating**.  
-
----
-
-## 🎛 **Admin Panel**  
-- Vetëm përdoruesit me **rolin "Admin"** kanë akses në **Admin Area**.  
-- Mund të menaxhojnë të gjitha entitetet me **CRUD Operations**.  
-- Aplikohen politika autorizimi që ndajnë rolet **User** dhe **Admin**.  
-
----
-
-## 🏗 **Arkitektura e Projektit**  
-- **ASP.NET Core MVC** me **Razor Pages**.  
-- **SQL Server** për ruajtjen e të dhënave.  
-- **Model-View-Controller (MVC) Architecture**:  
-  - **Model:** Definimi i entiteteve dhe krijimi i tabelave në database.  
-  - **View:** Razor Pages për ndërfaqen e përdoruesit.  
-  - **Controller:** Menaxhon të gjitha veprimet e faqes.
+### **Teknologjitë e Përdorura**  
+- **ASP.NET Core MVC** për backend-in.  
+- **Razor Pages** për ndërtimin e ndërfaqes së përdoruesit.  
+- **SQL Server** për menaxhimin e të dhënave.  
  
 
 
